@@ -8,7 +8,10 @@ export default function Page() {
         <Text style={styles.title}>Hello World</Text>
         <Text style={styles.subtitle}>This is the first page of your app.</Text>
       </View>
-      <Link href="/contact">Go to your profile</Link>
+      <Link href="/contact" params={"hello"}>contact</Link>
+      <Link href="/fetch">fetch</Link>
+      {/* <Link href="/camera" params="hello">camera</Link> */}
+      {/* <Link href="/camera" state={{params:"hello"}}>camera</Link> */}
     </View>
   );
 }
