@@ -2,7 +2,6 @@ import axios from "axios"
 import { StyleSheet, Text, View } from "react-native";
 import { Link } from "expo-router";
 import React, { useEffect, useState } from "react";
-import useAxios from 'axios-hooks';
 
 export default function Results() {
     const [pokemons, setPokemon] = useState(null);
