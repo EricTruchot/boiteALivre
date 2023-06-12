@@ -10,7 +10,7 @@ export default function App()  {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [isValid, setIsValid] = useState(); 
-  const [pokemon, setPokemon] = useState();
+  const [pokemon, setPokemon] = useState("test");
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -22,14 +22,10 @@ export default function App()  {
 // TODO REFACT LE SYTEME DE ROUTER
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    (async () => {
-      const result = await ResultsFetchAuthentification(data)
-      // this.setState({
-      //   clef: result
-      // }); 
-      console.log('result: ', result);
+    ( async () => {
+      let result = await ResultsFetchAuthentification(data);
+       console.log('result: ', result);
     })();
-    
 
   };
   if (hasPermission === null) {

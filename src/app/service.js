@@ -1,13 +1,13 @@
 import axios from "axios"
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 
-  export function ResultsFetchAuthentification(url) {
-    
+  export async function ResultsFetchAuthentification(url) {
+    let pokeRetour= "raté";
     console.log('poké: ', url);
-    axios.get(url)
+   await axios.get(url)
         .then((pokemon)=> {
-            const pokeRetour = pokemon?.data?.name;
-            console.log('name: ', pokemon?.data?.name);
-            return pokeRetour;
+            pokeRetour = pokemon?.data?.name;
+            console.log('name: ', pokeRetour);
         })
+        return await pokeRetour;
   }
