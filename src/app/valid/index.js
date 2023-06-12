@@ -5,14 +5,8 @@ export default function Page() {
   return (
     <View style={styles.container}>
       <View style={styles.main}>
-        <Text style={styles.title}>Hello World</Text>
-        <Text style={styles.subtitle}>This is the first page of your app.</Text>
+        <Text style={styles.title}>qsdpoihjgfk World</Text>
       </View>
-      <Link href="/contact" params={"hello"} style={styles.subtitle}>contact</Link>
-      <Link href="/fetch" style={styles.subtitle}>fetch</Link>
-      {/* <Link href="/camera" params="hello">camera</Link> */}
-      {/* <Link href="/camera" state={{params:"hello"}}>camera</Link> */}
-      <Link href={{pathname: '/camera', query: { name: 'test' },}} style={styles.subtitle}>camera</Link> 
     </View>
   );
 }

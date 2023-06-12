@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import { useLocation } from "react-router-dom"
+import { Link } from 'expo-router';
 
 export default function App() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const location = useLocation()
-  console.log(location?.state?.params)
+  const [isValid, setIsValid] = useState(''); 
+
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -16,10 +16,15 @@ export default function App() {
 
     getBarCodeScannerPermissions();
   }, []);
-
+// TODO REFACT LE SYTEME DE ROUTER
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    if (data === '"bonjour"') {
+      setIsValid('authorized');
+    } else {
+      setIsValid('denied');
+    }
   };
 
   if (hasPermission === null) {
@@ -28,14 +33,15 @@ export default function App() {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
-
   return (
     <View style={styles.container}>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={{ height: 400, width: 400 }}
-      />
-      {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+        />
+      {isValid === 'authorized' && <Link href='/valid' style={styles.subtitle}>suivant</Link>}
+      {isValid === 'denied' && scanned && <Button title={'ca marche pas, try again'} onPress={() => setScanned(false)} />}
+      <Link href={{pathname: '/valid', query: { name: 'valid' },}}>valid</Link>
     </View>
   );
 }
@@ -46,5 +52,9 @@ const styles = StyleSheet.create({
       padding: 24,
       justifyContent: "center",
       backgroundColor: "black",
-    }
+    },
+    subtitle: {
+      fontSize: 36,
+      color: "#38434D",
+    },
 })
