@@ -13,9 +13,6 @@ export default function Page() {
     const parse = await JSON.parse(result);
     setServTest(parse);
   }
-  function removeItem(id) {
-    setServTest(prev => prev.filter((el) => el.id !== id)); // filter by id
-  };
 
   return (
     <View style={styles.container}>
@@ -29,18 +26,18 @@ export default function Page() {
             </Text>
             <Button
               title={"delete"}
-              onPress={() => {
-                deleteServ(line?.id);
-                removeItem(line?.id);
+              onPress={async() => {
+                await deleteServ(line?.id);
+                await getData();
               }}
             />
           </View>
         ))}
         <Button //TODO le 1er clique marche pas?
           title={"ajout"}
-          onPress={() => {
-            postServ();
-            getData();
+          onPress={async() => {
+            await postServ();
+            await getData();
           }}
         />
       </View>

@@ -1,24 +1,56 @@
 {
   "boite": [
     {
-      "id": 8566,
-      "boite": "boite2"
+      "id": 1,
+      "boite": "a meuh"
     },
     {
-      "id": 57567,
-      "boite": "boite2"
+      "id": 2,
+      "boite": "a chaussure"
     },
     {
-      "id": 19803,
-      "boite": "boite2"
-    },
-    {
-      "id": 9794,
-      "boite": "boite2"
-    },
-    {
-      "id": 76685,
-      "boite": "boite2"
+      "id": 3,
+      "boite": "euse"
     }
-  ]
+
+  ],
+  "livre": [
+    {
+      "id": 1,
+      "livId": 2,
+      "etat": "dispo",
+      "titre": "livre1",
+      "utilisateur": "jeanMi",
+      "boite": "a chaussure"
+    },
+    {
+      "id": 1,
+      "livId": 2,
+      "etat": "pris",
+      "titre": "livre2",
+      "utilisateur": "jeanMi",
+      "boite": "a chaussure"
+    },
+    {
+      "id": 1,
+      "livId": 2,
+      "etat": "dispo",
+      "titre": "livre3",
+      "utilisateur": "jeanMi",
+      "boite": "a chaussure"
+    }
+  ],
+  "utilisateur": [
+    {
+
+      "id": 1,
+      "nom": "jeanMi"
+    }
+  ],
+  "historique": [
+    {
+      "id": 1,
+      "nom": "jeanMi"
+    }
+  ] 
 }
