@@ -1,6 +1,5 @@
-import { Link } from "expo-router";
 import { StyleSheet, Text, View, Button } from "react-native";
-import { postServ, testServ } from "../service";
+import { postServ, getServ, deleteServ } from "../service";
 import React, { useState, useEffect } from "react";
 
 export default function Page() {
@@ -10,22 +9,34 @@ export default function Page() {
   }, []);
 
   async function getData() {
-    const result = await testServ();
+    const result = await getServ();
     const parse = await JSON.parse(result);
     setServTest(parse);
   }
+  function removeItem(id) {
+    setServTest(prev => prev.filter((el) => el.id !== id)); // filter by id
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.main}>
         <Text style={styles.title}>MOCK</Text>
         {servTest.map((line) => (
-          <Text key={line?.id} style={styles.title}>
-            id: {line?.id}
-            boite: {line?.boite}
-          </Text>
+          <View key={line?.id}>
+            <Text style={styles.title}>
+              id: {line?.id}
+              boite: {line?.boite}
+            </Text>
+            <Button
+              title={"delete"}
+              onPress={() => {
+                deleteServ(line?.id);
+                removeItem(line?.id);
+              }}
+            />
+          </View>
         ))}
-        <Button
+        <Button //TODO le 1er clique marche pas?
           title={"ajout"}
           onPress={() => {
             postServ();
@@ -45,15 +56,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "black",
   },
-  //   main: {
-  //     flex: 1,
-  //     justifyContent: "center",
-  //     // maxWidth: 960,
-  //     margin: 0,
-  //     backgroundColor: "black",
-  //     width: 100,
-
-  //   },
   title: {
     fontSize: 64,
     fontWeight: "bold",
