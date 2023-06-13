@@ -22,6 +22,7 @@ export default function App()  {
 // TODO REFACT LE SYTEME DE ROUTER
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
+    console.log('data ',data);
     ( async () => {
       let result = await ResultsFetchAuthentification(data);
        console.log('result: ', result);
