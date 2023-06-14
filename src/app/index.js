@@ -40,6 +40,7 @@ export default function App()  {
 
   return (
     <View style={styles.container}>
+      <Link href="/map" style={styles.subtitle}>Want to see the map ?</Link>
       { isLoggedIn &&
         <Link href="/spot" style={styles.subtitle}>Scan la boite</Link>
       }

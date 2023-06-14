@@ -34,6 +34,8 @@ export default function App()  {
 
   return (
     <View style={styles.container}>
+      <Link href="/map" style={styles.subtitle}>Want to see the map ?</Link>
+
         {didTakeBook ? (
             <Text style={styles.title}>Vous avez emprunter un livre</Text>
         ) : (
