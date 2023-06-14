@@ -14,7 +14,6 @@ export default function IndexMap()  {
         await getAllSpots()
       })();
     }, []);
-    console.log(markers)
 
     async function getAllSpots() {
         const allSpots = await handleTable("spots");
