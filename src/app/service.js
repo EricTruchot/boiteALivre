@@ -20,8 +20,7 @@ import axios from "axios"
   }
 
   export async function postServ() {
-    const randomId = Math.floor(Math.random() * 100000) //TODO PAS FAIRE CA
-    await axios.post('http://localhost:3030/boite', { id: randomId, boite: "boite2"});
+    await axios.post('http://localhost:3030/boite', { boite: "boite2"});
   }
 
   export async function deleteServ(id) {
