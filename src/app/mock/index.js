@@ -1,4 +1,4 @@
-// json-server --watch  src\app\mock\db.json --port 3030
+// json-server --host 192.168.1.200 --watch src\app\mock\db.json --port 3030
 import { StyleSheet, Text, View, Button } from "react-native";
 import { postServ, getServ, deleteServ } from "../service";
 import React, { useState, useEffect } from "react";

@@ -11,6 +11,7 @@ export default function Page() {
       <Link href="/contact" params={"hello"} style={styles.subtitle}>contact</Link>
       <Link href="/fetch" style={styles.subtitle}>fetch</Link>
       <Link href="/mock" style={styles.subtitle}>mock</Link>
+      <Link href="/login" style={styles.subtitle}>login</Link>
       {/* <Link href="/camera" params="hello">camera</Link> */}
       {/* <Link href="/camera" state={{params:"hello"}}>camera</Link> */}
       <Link href={{pathname: '/camera', query: { name: 'test' },}} style={styles.subtitle}>camera</Link> 
