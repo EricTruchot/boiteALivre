@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Link } from 'expo-router';
-import { ResultsFetchAuthentification } from '../service';
 
-
-
-export default function App()  {
+export default function BarCodeGeneral()  {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const [isValid, setIsValid] = useState(); 
-  const [pokemon, setPokemon] = useState("test");
+
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -19,29 +15,28 @@ export default function App()  {
 
     getBarCodeScannerPermissions();
   }, []);
-// TODO REFACT LE SYTEME DE ROUTER
+
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     ( async () => {
-      let result = await ResultsFetchAuthentification(data);
+      // let result = await ResultsFetchAuthentification(data);
     })();
 
   };
+
   if (hasPermission === null) {
     return <Text>Requesting for camera permission</Text>;
   }
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
+
   return (
     <View style={styles.container}>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={{ height: 400, width: 400 }}
         />
-      {/* {isValid === 'authorized' && <Link href='/valid' style={styles.subtitle}>suivant</Link>} */}
-      <Text style={styles.subtitle}>{isValid}</Text>
-      {/* {isValid === 'denied' && scanned && <Button title={'ca marche pas, try again'} onPress={() => setScanned(false)} />} */}
       <Link href={{pathname: '/valid', query: { name: 'valid' },}}>valid</Link>
     </View>
   );

@@ -1,41 +1,65 @@
-import { StyleSheet, Text, View } from "react-native";
-import { Link } from "expo-router";
+import React, { useState, useEffect } from 'react';
+import { Text, View, StyleSheet } from 'react-native';
+import { BarCodeScanner } from 'expo-barcode-scanner';
+import { getUserById, handleTable } from './service';
+import { retrieveData, storeData } from './localstorageUser';
+import { Link } from 'expo-router';
 
-export default function Page() {
+export default function App()  {
+  const [hasPermission, setHasPermission] = useState(null);
+  const [scanned, setScanned] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const getBarCodeScannerPermissions = async () => {
+      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      setHasPermission(status === 'granted');
+    };
+
+    getBarCodeScannerPermissions();
+
+    if (retrieveData('isLoggedIn')) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleBarCodeScanned = ({ type, data }) => {
+    setScanned(true);
+    const table = data.split('/')[2]
+    handleTable(table);
+    setIsLoggedIn(true);
+
+  };
+
+  if (hasPermission === null) {
+    return <Text>Requesting for camera permission</Text>;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
+
   return (
     <View style={styles.container}>
-      <View style={styles.main}>
-        <Text style={styles.title}>Hello World</Text>
-        <Text style={styles.subtitle}>This is the first page of your app.</Text>
-      </View>
-      <Link href="/contact" params={"hello"} style={styles.subtitle}>contact</Link>
-      <Link href="/fetch" style={styles.subtitle}>fetch</Link>
-      <Link href="/mock" style={styles.subtitle}>mock</Link>
-      {/* <Link href="/camera" params="hello">camera</Link> */}
-      {/* <Link href="/camera" state={{params:"hello"}}>camera</Link> */}
-      <Link href={{pathname: '/camera', query: { name: 'test' },}} style={styles.subtitle}>camera</Link> 
+      { isLoggedIn &&
+        <Link href="/spot" style={styles.subtitle}>Scan la boite</Link>
+      }
+      <BarCodeScanner
+        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        style={{ height: 400, width: 400 }}
+        />
     </View>
   );
 }
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    padding: 24,
-  },
-  main: {
-    flex: 1,
-    justifyContent: "center",
-    maxWidth: 960,
-    marginHorizontal: "auto",
-  },
-  title: {
-    fontSize: 64,
-    fontWeight: "bold",
-  },
-  subtitle: {
-    fontSize: 36,
-    color: "#38434D",
-  },
-});
+    container: {
+      flex: 1,
+      alignItems: "center",
+      padding: 24,
+      justifyContent: "center",
+      backgroundColor: "black",
+    },
+    subtitle: {
+      fontSize: 36,
+      color: "#38434D",
+    },
+})
