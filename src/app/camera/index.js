@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Link } from 'expo-router';
+import { ResultsFetchAuthentification } from '../service';
 
-export default function App() {
+
+
+export default function App()  {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const [isValid, setIsValid] = useState(''); 
-
+  const [isValid, setIsValid] = useState(); 
+  const [pokemon, setPokemon] = useState("test");
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -19,14 +22,11 @@ export default function App() {
 // TODO REFACT LE SYTEME DE ROUTER
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-    if (data === '"bonjour"') {
-      setIsValid('authorized');
-    } else {
-      setIsValid('denied');
-    }
-  };
+    ( async () => {
+      let result = await ResultsFetchAuthentification(data);
+    })();
 
+  };
   if (hasPermission === null) {
     return <Text>Requesting for camera permission</Text>;
   }
@@ -39,8 +39,9 @@ export default function App() {
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={{ height: 400, width: 400 }}
         />
-      {isValid === 'authorized' && <Link href='/valid' style={styles.subtitle}>suivant</Link>}
-      {isValid === 'denied' && scanned && <Button title={'ca marche pas, try again'} onPress={() => setScanned(false)} />}
+      {/* {isValid === 'authorized' && <Link href='/valid' style={styles.subtitle}>suivant</Link>} */}
+      <Text style={styles.subtitle}>{isValid}</Text>
+      {/* {isValid === 'denied' && scanned && <Button title={'ca marche pas, try again'} onPress={() => setScanned(false)} />} */}
       <Link href={{pathname: '/valid', query: { name: 'valid' },}}>valid</Link>
     </View>
   );
