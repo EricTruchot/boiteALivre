@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Text, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { handleTable } from '../service';
+import { Link } from 'expo-router';
 
 export default function App()  {
   const [scanned, setScanned] = useState(false);
@@ -34,6 +35,8 @@ export default function App()  {
 
   return (
     <View style={styles.container}>
+      <Link href="/map" style={styles.subtitle}>Want to see the map ?</Link>
+
         {didTakeBook ? (
             <Text style={styles.title}>Vous avez emprunter un livre</Text>
         ) : (
@@ -63,7 +66,6 @@ export default function App()  {
                 title={"Prend le livre (nécessite un scan)"}
                 onPress={async() => {
                     setTakeBook(livre?.id);
-                    // prendreLivre(livre?.id);
                 }}
                 />
           </View>
